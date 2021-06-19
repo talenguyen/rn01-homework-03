@@ -22,7 +22,6 @@ const CheckedItem = ({image, name, kCal, description, price, listingPrice}) => (
     </View>
   </View>
 );
-export default CheckedItem;
 
 const styles = StyleSheet.create({
   checkedContainer: {
@@ -43,3 +42,5 @@ const styles = StyleSheet.create({
     marginLeft: getHorizontalSize(24),
   },
 });
+
+export default CheckedItem;

@@ -24,8 +24,6 @@ const Item = ({image, name, kCal, description, price, listingPrice}) => (
   </View>
 );
 
-export default Item;
-
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
@@ -75,3 +73,5 @@ const styles = StyleSheet.create({
     marginLeft: getHorizontalSize(16),
   },
 });
+
+export default Item;
