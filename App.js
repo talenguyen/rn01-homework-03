@@ -13,7 +13,8 @@ import {
   StyleSheet,
   useColorScheme,
   View,
-  FlatList,
+  Text,
+  SectionList,
 } from 'react-native';
 
 import Item from './src/components/item';
@@ -30,47 +31,100 @@ const Images = {
 
 const DATA = [
   {
-    image: Images.shrimpPizza,
-    name: 'Shrimp Pizza',
-    kCal: 475,
-    description: 'Shrimp, mushroom, cheese, tomato',
-    price: 12,
-    listingPrice: 20,
-    isChecked: false,
+    title: 'Special Delivery',
+    data: [
+      {
+        id: 1,
+        image: Images.shrimpPizza,
+        name: 'Shrimp Pizza',
+        kCal: 475,
+        description: 'Shrimp, mushroom, cheese, tomato',
+        price: 12,
+        listingPrice: 20,
+        isChecked: false,
+      },
+      {
+        id: 2,
+        image: Images.pinnaclePizza,
+        name: 'Pinnacle Pizza',
+        kCal: 500,
+        description: 'Luna’s howl, hush, delirium, revoker',
+        price: 20,
+        listingPrice: 99,
+        isChecked: true,
+      },
+      {
+        id: 3,
+        image: Images.houseStokePizza,
+        name: 'House Stoke Pizza',
+        kCal: 493,
+        description: 'Pig, pog, pet, pird',
+        price: 15,
+        listingPrice: 25,
+        isChecked: false,
+      },
+      {
+        id: 4,
+        image: Images.veganPizza,
+        name: 'Vegan Pizza',
+        kCal: 120,
+        description: 'Fake beef, soy, cheese, mushroom',
+        price: 20,
+        listingPrice: 33,
+        isChecked: false,
+      },
+    ],
   },
   {
-    image: Images.pinnaclePizza,
-    name: 'Pinnacle Pizza',
-    kCal: 500,
-    description: 'Luna’s howl, hush, delirium, revoker',
-    price: 20,
-    listingPrice: 99,
-    isChecked: true,
-  },
-  {
-    image: Images.houseStokePizza,
-    name: 'House Stoke Pizza',
-    kCal: 493,
-    description: 'Pig, pog, pet, pird',
-    price: 15,
-    listingPrice: 25,
-    isChecked: false,
-  },
-  {
-    image: Images.veganPizza,
-    name: 'Vegan Pizza',
-    kCal: 120,
-    description: 'Fake beef, soy, cheese, mushroom',
-    price: 20,
-    listingPrice: 33,
-    isChecked: false,
+    title: 'Hot Deals',
+    data: [
+      {
+        id: 5,
+        image: Images.shrimpPizza,
+        name: 'Shrimp Pizza',
+        kCal: 475,
+        description: 'Shrimp, mushroom, cheese, tomato',
+        price: 12,
+        listingPrice: 20,
+        isChecked: false,
+      },
+      {
+        id: 6,
+        image: Images.pinnaclePizza,
+        name: 'Pinnacle Pizza',
+        kCal: 500,
+        description: 'Luna’s howl, hush, delirium, revoker',
+        price: 20,
+        listingPrice: 99,
+        isChecked: true,
+      },
+      {
+        id: 7,
+        image: Images.houseStokePizza,
+        name: 'House Stoke Pizza',
+        kCal: 493,
+        description: 'Pig, pog, pet, pird',
+        price: 15,
+        listingPrice: 25,
+        isChecked: false,
+      },
+      {
+        id: 8,
+        image: Images.veganPizza,
+        name: 'Vegan Pizza',
+        kCal: 120,
+        description: 'Fake beef, soy, cheese, mushroom',
+        price: 20,
+        listingPrice: 33,
+        isChecked: false,
+      },
+    ],
   },
 ];
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const itemSeparator = () => <View style={styles.divider} />;
   const renderItem = ({item}) => {
     const {image, name, kCal, description, price, listingPrice, isChecked} =
       item;
@@ -99,19 +153,26 @@ const App = () => {
     }
   };
 
-  const keyExtractor = item => item.name;
+  const keyExtractor = item => item.id;
+
+  const itemSeparator = () => <View style={styles.separator} />;
+  const renderSectionFooter = () => {
+    return <View style={styles.sectionFooter} />;
+  };
+  const renderSectionHeader = ({section: {title}}) => (
+    <Text style={styles.header}>{title}</Text>
+  );
 
   return (
     <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <FlatList
-        style={styles.itemListContainer}
-        data={DATA}
-        //data defined in constructor
-        ItemSeparatorComponent={itemSeparator}
-        //Item Separator View
-        renderItem={renderItem}
+      <SectionList
+        sections={DATA}
         keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ItemSeparatorComponent={itemSeparator}
+        renderSectionHeader={renderSectionHeader}
+        renderSectionFooter={renderSectionFooter}
       />
     </SafeAreaView>
   );
@@ -121,10 +182,22 @@ const styles = StyleSheet.create({
   itemListContainer: {
     backgroundColor: '#FFF',
   },
-  divider: {
+  separator: {
     backgroundColor: '#EFF0F3',
     height: getVerticalSize(1),
     marginHorizontal: getHorizontalSize(24),
+  },
+  sectionFooter: {
+    backgroundColor: '#EFF0F3',
+    height: getVerticalSize(5),
+  },
+  header: {
+    backgroundColor: '#FFF',
+    fontSize: 20,
+    fontWeight: '500',
+    paddingHorizontal: getHorizontalSize(24),
+    paddingTop: getVerticalSize(24),
+    paddingBottom: getVerticalSize(8),
   },
 });
 
