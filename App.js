@@ -15,52 +15,142 @@ import {
   View,
   Text,
   Image,
+  FlatList,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {getHorizontalSize, getVerticalSize} from './src/utilities/size';
 
 const Images = {
   shrimpPizza: require('./src/assets/images/shrimp-pizza.png'),
+  pinnaclePizza: require('./src/assets/images/pinnacle-pizza.png'),
+  houseStokePizza: require('./src/assets/images/house-stoke-pizza.png'),
+  veganPizza: require('./src/assets/images/vegan-pizza.png'),
+  checked: require('./src/assets/images/checked.png'),
 };
 
-const Item = () => (
+const DATA = [
+  {
+    image: Images.shrimpPizza,
+    name: 'Shrimp Pizza',
+    kCal: 475,
+    description: 'Shrimp, mushroom, cheese, tomato',
+    price: 12,
+    listingPrice: 20,
+    isChecked: false,
+  },
+  {
+    image: Images.pinnaclePizza,
+    name: 'Pinnacle Pizza',
+    kCal: 500,
+    description: 'Luna’s howl, hush, delirium, revoker',
+    price: 20,
+    listingPrice: 99,
+    isChecked: true,
+  },
+  {
+    image: Images.houseStokePizza,
+    name: 'House Stoke Pizza',
+    kCal: 493,
+    description: 'Pig, pog, pet, pird',
+    price: 15,
+    listingPrice: 25,
+    isChecked: false,
+  },
+  {
+    image: Images.veganPizza,
+    name: 'Vegan Pizza',
+    kCal: 120,
+    description: 'Fake beef, soy, cheese, mushroom',
+    price: 20,
+    listingPrice: 33,
+    isChecked: false,
+  },
+];
+
+const Item = ({image, name, kCal, description, price, listingPrice}) => (
   <View style={styles.itemContainer}>
     <View>
-      <Image source={Images.shrimpPizza} style={styles.itemImage} />
+      <Image source={image} style={styles.itemImage} />
     </View>
     <View style={styles.itemInfoContainer}>
       <View>
         <View style={styles.itemNameContainer}>
-          <Text style={styles.itemName}>Shrimp Pizza</Text>
-          <Text style={styles.itemKCal}>KCal : 475</Text>
+          <Text style={styles.itemName}>{name}</Text>
+          <Text style={styles.itemKCal}>KCal : {kCal}</Text>
         </View>
-        <Text style={styles.itemDescription}>
-          Shrimp, mushroom, cheese, tomato
-        </Text>
+        <Text style={styles.itemDescription}>{description}</Text>
       </View>
       <View style={styles.itemPriceContainer}>
-        <Text style={styles.itemPrice}>$ 12.00</Text>
-        <Text style={styles.itemListingPrice}>$ 20.00</Text>
+        <Text style={styles.itemPrice}>$ {price.toFixed(2)}</Text>
+        <Text style={styles.itemListingPrice}>$ {listingPrice.toFixed(2)}</Text>
       </View>
     </View>
   </View>
 );
+
+const CheckedItem = ({image, name, kCal, description, price, listingPrice}) => (
+  <View>
+    <Item
+      image={image}
+      name={name}
+      kCal={kCal}
+      description={description}
+      price={price}
+      listingPrice={listingPrice}
+    />
+    <View style={styles.checkedContainer}>
+      <Image style={styles.checkedImage} source={Images.checked} />
+      <Text style={styles.checkedText}>twice by you</Text>
+    </View>
+  </View>
+);
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const itemSeparator = () => <View style={styles.divider} />;
+  const renderItem = ({item}) => {
+    const {image, name, kCal, description, price, listingPrice, isChecked} =
+      item;
+    if (isChecked) {
+      return (
+        <CheckedItem
+          image={image}
+          name={name}
+          kCal={kCal}
+          description={description}
+          price={price}
+          listingPrice={listingPrice}
+        />
+      );
+    } else {
+      return (
+        <Item
+          image={image}
+          name={name}
+          kCal={kCal}
+          description={description}
+          price={price}
+          listingPrice={listingPrice}
+        />
+      );
+    }
   };
 
+  const keyExtractor = item => item.name;
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View style={styles.itemListContainer}>
-        <Item />
-        <View style={styles.divider} />
-        <Item />
-      </View>
+      <FlatList
+        style={styles.itemListContainer}
+        data={DATA}
+        //data defined in constructor
+        ItemSeparatorComponent={itemSeparator}
+        //Item Separator View
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+      />
     </SafeAreaView>
   );
 };
@@ -116,6 +206,23 @@ const styles = StyleSheet.create({
     color: '#9B9B9B',
     textDecorationLine: 'line-through',
     marginLeft: getHorizontalSize(16),
+  },
+  checkedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: getVerticalSize(-8),
+    paddingBottom: getVerticalSize(6),
+  },
+  checkedText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#9B9B9B',
+    marginLeft: getHorizontalSize(5),
+  },
+  checkedImage: {
+    width: getHorizontalSize(11),
+    height: getVerticalSize(10),
+    marginLeft: getHorizontalSize(24),
   },
   divider: {
     backgroundColor: '#EFF0F3',
