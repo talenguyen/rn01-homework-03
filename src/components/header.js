@@ -11,7 +11,10 @@ const CheckoutPopup = () => {
         source={require('../assets/images/chevron-left.png')}
       />
       <Text style={styles.title}>Pizzon - Crib Ln</Text>
-      <Image style={styles.icon} source={require('../assets/images/x.png')} />
+      <Image
+        style={styles.icon}
+        source={require('../assets/images/heart.png')}
+      />
     </View>
   );
 };
