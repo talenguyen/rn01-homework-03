@@ -9,6 +9,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 
+import Header from './src/components/header';
 import Menu from './src/components/menu';
 import CheckoutPopup from './src/components/checkoutPopup';
 
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Header />
       <Menu />
       <CheckoutPopup />
     </SafeAreaView>
