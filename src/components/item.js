@@ -50,10 +50,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginRight: getHorizontalSize(8),
+    color: '#4F585E',
   },
   itemKCal: {
     fontSize: 12,
     fontWeight: '500',
+    color: '#9B9B9B',
   },
   itemDescription: {
     fontSize: 12,
