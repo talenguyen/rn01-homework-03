@@ -7,52 +7,46 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
+  Text,
+  Image,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {getHorizontalSize, getVerticalSize} from './src/utilities/size';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const Images = {
+  shrimpPizza: require('./src/assets/images/shrimp-pizza.png'),
 };
 
-const App: () => Node = () => {
+const Item = () => (
+  <View style={styles.itemContainer}>
+    <View>
+      <Image source={Images.shrimpPizza} style={styles.itemImage} />
+    </View>
+    <View style={styles.itemInfoContainer}>
+      <View>
+        <View style={styles.itemNameContainer}>
+          <Text style={styles.itemName}>Shrimp Pizza</Text>
+          <Text style={styles.itemKCal}>KCal : 475</Text>
+        </View>
+        <Text style={styles.itemDescription}>
+          Shrimp, mushroom, cheese, tomato
+        </Text>
+      </View>
+      <View style={styles.itemPriceContainer}>
+        <Text style={styles.itemPrice}>$ 12.00</Text>
+        <Text style={styles.itemListingPrice}>$ 20.00</Text>
+      </View>
+    </View>
+  </View>
+);
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -62,50 +56,71 @@ const App: () => Node = () => {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <View style={styles.itemListContainer}>
+        <Item />
+        <View style={styles.divider} />
+        <Item />
+      </View>
     </SafeAreaView>
   );
 };
 
+console.log(getHorizontalSize(74));
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  itemListContainer: {
+    backgroundColor: '#FFF',
   },
-  sectionTitle: {
-    fontSize: 24,
+  itemContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: getHorizontalSize(24),
+    paddingVertical: getVerticalSize(16),
+  },
+  itemInfoContainer: {
+    justifyContent: 'space-between',
+    marginLeft: getHorizontalSize(16),
+  },
+  itemImage: {
+    width: getHorizontalSize(74),
+    height: getHorizontalSize(74),
+  },
+  itemNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemPriceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemName: {
+    fontSize: 16,
     fontWeight: '600',
+    marginRight: getHorizontalSize(8),
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  itemKCal: {
+    fontSize: 12,
+    fontWeight: '500',
   },
-  highlight: {
-    fontWeight: '700',
+  itemDescription: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#9B9B9B',
+    marginTop: getVerticalSize(4),
+  },
+  itemPrice: {
+    fontSize: 16,
+    color: '#FB6D3B',
+  },
+  itemListingPrice: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#9B9B9B',
+    textDecorationLine: 'line-through',
+    marginLeft: getHorizontalSize(16),
+  },
+  divider: {
+    backgroundColor: '#EFF0F3',
+    height: getVerticalSize(1),
+    marginHorizontal: getHorizontalSize(24),
   },
 });
 
