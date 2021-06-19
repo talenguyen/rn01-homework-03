@@ -1,11 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Image, Text} from 'react-native';
 
-import {
-  getHorizontalSize,
-  getVerticalSize,
-  windowWidth,
-} from '../utilities/size';
+import {getHorizontalSize, getVerticalSize} from '../utilities/size';
 
 const CheckoutPopup = () => {
   return (
