@@ -21,6 +21,8 @@ import Menu from './src/components/menu';
 import CheckoutPopup from './src/components/checkoutPopup';
 import {getVerticalSize} from './src/utilities/size';
 
+const TABS = ['Autumn', 'Special', 'Hot deals', 'Traditional', 'Other'];
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -28,7 +30,7 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Header />
-      <Tabs />
+      <Tabs tabs={TABS} onPress={tab => console.log(`${tab} is pressed`)} />
       <View style={styles.separator} />
       <Menu />
       <CheckoutPopup />

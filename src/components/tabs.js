@@ -3,10 +3,8 @@ import {StyleSheet, View, Text, TouchableOpacity, FlatList} from 'react-native';
 
 import {getHorizontalSize, getVerticalSize} from '../utilities/size';
 
-const DATA = ['Autumn', 'Special', 'Hot deals', 'Traditional', 'Other'];
-
-const Tabs = () => {
-  const [selectedItem, setSelectedItem] = useState(DATA[0]);
+const Tabs = ({tabs, onPress}) => {
+  const [selectedItem, setSelectedItem] = useState(tabs[0]);
   const renderNormalItem = title => {
     return (
       <View style={styles.item}>
@@ -23,7 +21,10 @@ const Tabs = () => {
     );
   };
   const renderItem = ({item}) => {
-    const onItemPress = () => setSelectedItem(item);
+    const onItemPress = () => {
+      setSelectedItem(item);
+      onPress(item);
+    };
     const itemView =
       item === selectedItem ? renderActiveItem(item) : renderNormalItem(item);
     return (
@@ -37,7 +38,7 @@ const Tabs = () => {
     <FlatList
       style={styles.container}
       horizontal={true}
-      data={DATA}
+      data={tabs}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       ItemSeparatorComponent={itemSeparator}
